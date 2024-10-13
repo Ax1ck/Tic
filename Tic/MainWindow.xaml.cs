@@ -148,5 +148,21 @@ namespace Tic
 
             return false; // Победитель не найден
         }
+        private void RestartGame()
+        {
+            foreach (Button button in buttons)
+            {
+                button.Content = null;
+                button.IsEnabled = true;
+            }
+
+            // Сбрасываем состояние игры
+            for (int i = 0; i < 3; i++)
+                for (int j = 0; j < 3; j++)
+                    gameState[i, j] = null;
+
+            isDiscordTurn = true;
+            movesCount = 0;
+        }
     }
 }
