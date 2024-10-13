@@ -52,5 +52,60 @@ namespace Tic
                 for (int j = 0; j < 3; j++)
                     gameState[i, j] = null;
         }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+
+            // Ищем индексы нажатой кнопки
+            int row = -1, col = -1;
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    if (buttons[i, j] == button)
+                    {
+                        row = i;
+                        col = j;
+                        break;
+                    }
+                }
+            }
+
+            if (gameState[row, col] != null)
+                return;
+
+            Image image = new Image();
+
+            // Устанавливаем изображение в зависимости от текущего хода
+            if (isDiscordTurn)
+            {
+                gameState[row, col] = 0; // Discord
+                image.Source = discordImage;
+            }
+            else
+            {
+                gameState[row, col] = 1; // РКН
+                image.Source = rknImage;
+            }
+
+            button.Content = image;
+            movesCount++;
+
+            if (CheckForWinner())
+            {
+                MessageBox.Show($"{(isDiscordTurn ? "Discord" : "РКН")} победил!", "Победа");
+                RestartGame();
+                return;
+            }
+
+            if (movesCount == 9)
+            {
+                MessageBox.Show("Ничья!", "Конец игры");
+                RestartGame();
+                return;
+            }
+
+            isDiscordTurn = !isDiscordTurn;
+        }
     }
 }
