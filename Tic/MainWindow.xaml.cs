@@ -107,5 +107,46 @@ namespace Tic
 
             isDiscordTurn = !isDiscordTurn;
         }
+        private bool CheckForWinner()
+        {
+            // Проверка горизонтальных линий
+            for (int i = 0; i < 3; i++)
+            {
+                if (gameState[i, 0] != null &&
+                    gameState[i, 0] == gameState[i, 1] &&
+                    gameState[i, 0] == gameState[i, 2])
+                {
+                    return true;
+                }
+            }
+
+            // Проверка вертикальных линий
+            for (int i = 0; i < 3; i++)
+            {
+                if (gameState[0, i] != null &&
+                    gameState[0, i] == gameState[1, i] &&
+                    gameState[0, i] == gameState[2, i])
+                {
+                    return true;
+                }
+            }
+
+            // Проверка диагоналей
+            if (gameState[0, 0] != null &&
+                gameState[0, 0] == gameState[1, 1] &&
+                gameState[0, 0] == gameState[2, 2])
+            {
+                return true;
+            }
+
+            if (gameState[0, 2] != null &&
+                gameState[0, 2] == gameState[1, 1] &&
+                gameState[0, 2] == gameState[2, 0])
+            {
+                return true;
+            }
+
+            return false; // Победитель не найден
+        }
     }
 }
